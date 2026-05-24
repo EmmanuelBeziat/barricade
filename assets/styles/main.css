@@ -64,7 +64,7 @@
 
 html {
 	box-sizing: border-box;
-	scrollbar-color: var(--color-white) transparent;
+	scrollbar-color: var(--color-black) transparent;
 	scrollbar-width: auto;
 	scrollbar-gutter: stable;
 	interpolate-size: allow-keywords;
@@ -74,7 +74,7 @@ body {
 	margin: 0;
 	background: var(--background-main);
 	color: var(--color-white);
-	font: 400 16px/1.5 var(--font-stack-default);
+	font: 400 var(--font-size-base)/1.5 var(--font-stack-common);
 }
 
 .landing {
