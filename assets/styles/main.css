@@ -66,7 +66,7 @@ html {
 	box-sizing: border-box;
 	scrollbar-color: var(--color-black) transparent;
 	scrollbar-width: auto;
-	scrollbar-gutter: stable;
+	/* scrollbar-gutter: stable; */
 	interpolate-size: allow-keywords;
 }
 
