@@ -1,0 +1,95 @@
+@font-face {
+	font-family: "White On Black";
+	src: url("../fonts/white-on-black/whiteonblack.woff2") format("woff2"), url("../fonts/white-on-black/whiteonblack.woff") format("woff");
+	font-weight: 900;
+	font-style: normal;
+	font-display: swap;
+}
+
+:root {
+	--color-black: #242124;
+	--color-white: #dddbd8;
+	--color-primary: #9c2150;
+	--background-main: linear-gradient(to bottom, var(--color-black), hsl(from var(--color-black) h s calc(l - 5)));
+
+	/* font families */
+	--font-stack-common: system-ui, arial, sans-serif;
+	--font-stack-heading: "White On Black", var(--font-stack-common);
+
+	/* font sizes */
+	--font-size-base: 16px;
+
+	/* transitions */
+	--timing-fast: .25s;
+	--timing-normal: 2s;
+
+	@media (prefers-reduced-motion: reduce) {
+		--timing-fast: 0;
+		--timing-normal: 0;
+	}
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	:root {
+		scroll-behavior: smooth;
+	}
+
+	:focus {
+		transition: outline-offset var(--timing-fast) ease;
+		outline-offset: 5px;
+	}
+}
+
+@keyframes animation-appear {
+	to {
+		opacity: 1;
+		translate: 0 0;
+		scale: 1;
+		filter: blur(0);
+		transform: skewY(0);
+	}
+}
+
+::selection {
+	background: var(--color-primary);
+	color: var(--color-white);
+	text-shadow: 0 1px 0 rgb(0 0 0 / .5)
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: inherit;
+}
+
+html {
+	box-sizing: border-box;
+	scrollbar-color: var(--color-white) transparent;
+	scrollbar-width: auto;
+	scrollbar-gutter: stable;
+	interpolate-size: allow-keywords;
+}
+
+body {
+	margin: 0;
+	background: var(--background-main);
+	color: var(--color-white);
+	font: 400 16px/1.5 var(--font-stack-default);
+}
+
+.landing {
+	min-block-size: 100dvh;
+	display: grid;
+	place-items: center;
+	padding: 2rem;
+}
+
+.logotype {
+	font: 900 clamp(2rem, 15cqi, 22ch)/1 var(--font-stack-heading);
+	margin-block: 0;
+	text-transform: lowercase;
+	opacity: 0;
+	translate: 0 25%;
+	animation: var(--timing-normal) cubic-bezier(0, 0.206, 0.34, 1) .5s forwards animation-appear;
+}
+
