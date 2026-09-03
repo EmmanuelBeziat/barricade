@@ -1,20 +1,22 @@
 @font-face {
-	font-family: "White On Black";
-	src: url("../fonts/white-on-black/whiteonblack.woff2") format("woff2"), url("../fonts/white-on-black/whiteonblack.woff") format("woff");
-	font-weight: 900;
+	font-family: "VFC Fantomen";
+	src: url("../fonts/vfc-fantomen/VFCFantomen.woff2") format("woff2");
+	font-weight: normal;
 	font-style: normal;
 	font-display: swap;
 }
 
+
 :root {
 	--color-black: #242124;
-	--color-white: #dddbd8;
-	--color-primary: #9c2150;
-	--background-main: linear-gradient(to bottom, var(--color-black), hsl(from var(--color-black) h s calc(l - 5)));
+	--color-white: #e9ddcf;
+	--color-primary: #c0543a;
+	--color-alt: #6c1400;
+	--background-main: linear-gradient(to bottom, var(--color-alt), hsl(from var(--color-alt) h s calc(l - 5)));
 
 	/* font families */
 	--font-stack-common: system-ui, arial, sans-serif;
-	--font-stack-heading: "White On Black", var(--font-stack-common);
+	--font-stack-heading: "VFC Fantomen", var(--font-stack-common);
 
 	/* font sizes */
 	--font-size-base: 16px;
@@ -64,7 +66,7 @@
 
 html {
 	box-sizing: border-box;
-	scrollbar-color: var(--color-black) transparent;
+	scrollbar-color: var(--color-alt) transparent;
 	scrollbar-width: auto;
 	scrollbar-gutter: stable;
 	interpolate-size: allow-keywords;
@@ -72,7 +74,7 @@ html {
 
 body {
 	margin: 0;
-	background: var(--color-black);
+	background: var(--color-alt);
 	color: var(--color-white);
 	font: 400 var(--font-size-base)/1.5 var(--font-stack-common);
 }
@@ -85,11 +87,18 @@ body {
 }
 
 .logotype {
+	color: var(--color-white);
 	font: 900 clamp(2rem, 15cqi, 22ch)/1 var(--font-stack-heading);
 	margin-block: 0;
 	text-transform: lowercase;
 	opacity: 0;
 	translate: 0 25%;
 	animation: var(--timing-normal) cubic-bezier(0, 0.206, 0.34, 1) .5s forwards animation-appear;
+	display: flex;
+	width: clamp(10vw, 20em, 70vw);
+
+	:is(img, svg) {
+		width: 100%;
+	}
 }
 

@@ -3,19 +3,19 @@
   "short_name": "Barricade",
   "icons": [
     {
-      "src": "/assets/images/favicons/web-app-manifest-192x192.png",
+      "src": "/assets/images/favicons/web-app-manifest-192x192.png?v=20260903",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "/assets/images/favicons/web-app-manifest-512x512.png",
+      "src": "/assets/images/favicons/web-app-manifest-512x512.png?v=20260903",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#9c2150",
-  "background_color": "#242124",
+  "theme_color": "#6c1400",
+  "background_color": "#6c1400",
   "display": "standalone"
 }
