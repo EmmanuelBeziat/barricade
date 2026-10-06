@@ -7,11 +7,11 @@
 }
 
 @font-face {
-  font-family: Teko;
-  src: url("../fonts/teko/Teko-Variable.woff2") format("woff2");
-  font-weight: 300 700;
-  font-display: swap;
-  font-style: normal;
+	font-family: Teko;
+	src: url("../fonts/teko/Teko-Variable.woff2") format("woff2");
+	font-weight: 300 700;
+	font-display: swap;
+	font-style: normal;
 }
 
 :root {
@@ -117,19 +117,19 @@ body {
 }
 
 @keyframes vibrate {
-  0%, 100% {
-    transform: translate(0);
-  }
-  20% {
-    transform: translate(1px, -2px);
-  }
-  40% {
-    transform: translate(2px, 2px);
-  }
-  60% {
-    transform: translate(-2px, 1px);
-  }
-  80% {
-    transform: translate(-1px, -2px);
-  }
+	0%, 100% {
+		transform: translate(0);
+	}
+	20% {
+		transform: translate(1px, -2px);
+	}
+	40% {
+		transform: translate(2px, 2px);
+	}
+	60% {
+		transform: translate(-2px, 1px);
+	}
+	80% {
+		transform: translate(-1px, -2px);
+	}
 }
