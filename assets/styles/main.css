@@ -109,3 +109,27 @@ body {
 	}
 }
 
+#Torche {
+	path {
+		--timming: calc(5s / sibling-index() * sibling-count());
+		animation: vibrate var(--timming) ease-in-out infinite .35s both;
+	}
+}
+
+@keyframes vibrate {
+  0%, 100% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(1px, -2px);
+  }
+  40% {
+    transform: translate(2px, 2px);
+  }
+  60% {
+    transform: translate(-2px, 1px);
+  }
+  80% {
+    transform: translate(-1px, -2px);
+  }
+}
