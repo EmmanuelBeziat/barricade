@@ -6,6 +6,13 @@
 	font-display: swap;
 }
 
+@font-face {
+  font-family: Teko;
+  src: url("../fonts/teko/Teko-Variable.woff2") format("woff2");
+  font-weight: 300 700;
+  font-display: swap;
+  font-style: normal;
+}
 
 :root {
 	--color-black: #242124;
@@ -16,7 +23,7 @@
 
 	/* font families */
 	--font-stack-common: system-ui, arial, sans-serif;
-	--font-stack-heading: "VFC Fantomen", var(--font-stack-common);
+	--font-stack-heading: Teko, var(--font-stack-common);
 
 	/* font sizes */
 	--font-size-base: 16px;
