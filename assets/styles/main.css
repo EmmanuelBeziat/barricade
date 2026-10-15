@@ -37,12 +37,20 @@
 	--duration-fast: .25s;
 	--duration-normal: 2s;
 	--duration-vibrate: 5s;
+	--duration-ignite: .8s;
+	--duration-light: .6s;
+	--delay-ignite: 1.2s;
+	--delay-light-step: .12s;
 	--timing-appear: cubic-bezier(0, 0.206, 0.34, 1);
 
 	@media (prefers-reduced-motion: reduce) {
 		--duration-fast: 0s;
 		--duration-normal: 0s;
 		--duration-vibrate: 0s;
+		--duration-ignite: 0s;
+		--duration-light: 0s;
+		--delay-ignite: 0s;
+		--delay-light-step: 0s;
 	}
 }
 
@@ -115,7 +123,47 @@ body {
 
 #Torche {
 	path {
-		animation: vibrate calc(var(--duration-vibrate) / sibling-index() * sibling-count()) ease-in-out infinite .35s both;
+		--animation-vibrate: vibrate calc(var(--duration-vibrate) / sibling-index() * sibling-count()) ease-in-out infinite .35s both;
+		animation: var(--animation-vibrate);
+	}
+
+	#Flamme {
+		animation: var(--animation-vibrate), ignite var(--duration-ignite) linear var(--delay-ignite) both;
+	}
+}
+
+/* letters light up from the torch outwards */
+#Texte {
+	> * {
+		--light-order: 4;
+		opacity: 0;
+		animation: light-up var(--duration-light) ease-out calc(var(--delay-ignite) + var(--duration-ignite) * .75 + var(--light-order) * var(--delay-light-step)) forwards;
+	}
+
+	#R-2, #C { --light-order: 1; }
+	#R, #A-2 { --light-order: 2; }
+	/* #R-3 is the D */
+	#A, #R-3 { --light-order: 3; }
+}
+
+@keyframes ignite {
+	0% { opacity: 0; }
+	10% { opacity: .8; }
+	15% { opacity: .1; }
+	30% { opacity: 1; }
+	35% { opacity: .3; }
+	55% { opacity: .9; }
+	60% { opacity: .5; }
+	100% { opacity: 1; }
+}
+
+@keyframes light-up {
+	35% {
+		opacity: 1;
+		color: var(--primary-base);
+	}
+	to {
+		opacity: 1;
 	}
 }
 
