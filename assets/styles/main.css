@@ -37,14 +37,14 @@
 	--duration-fast: .25s;
 	--duration-normal: 2s;
 	--duration-vibrate: 7s;
-	--duration-ignite: .6s;
+	--duration-ignite: .8s;
 	--duration-light: .5s;
 	--duration-spread: .8s;
+	--duration-glow: 1.5s;
 	--delay-ignite: .9s;
 	--delay-light-step: .1s;
 	--spread-step: 6px;
 	--timing-appear: cubic-bezier(0, 0.206, 0.34, 1);
-	/* damped spring: 1 - e^(-5t) * cos(3πt) */
 	--timing-spring: linear(0, 0.25, 0.534, 0.795, 1, 1.135, 1.203, 1.215, 1.189, 1.142, 1.088, 1.039, 1, 0.974, 0.962, 0.959, 0.964, 0.973, 0.983, 0.993, 1, 1.005, 1.007, 1.008, 1);
 
 	@media (prefers-reduced-motion: reduce) {
@@ -129,9 +129,7 @@ body {
 #Torche {
 	/* bottom of the torch slowest, flame fastest */
 	--duration-vibrate-path: calc(var(--duration-vibrate) * (1 + (sibling-count() - sibling-index()) * .25));
-	--animation-vibrate:
-		vibrate-x calc(var(--duration-vibrate-path) * .2) ease-in-out infinite alternate .35s both,
-		vibrate-y calc(var(--duration-vibrate-path) * .13) ease-in-out infinite alternate .35s both;
+	--animation-vibrate: vibrate-x calc(var(--duration-vibrate-path) * .2) ease-in-out infinite alternate .35s both, vibrate-y calc(var(--duration-vibrate-path) * .13) ease-in-out infinite alternate .35s both;
 
 	path {
 		translate: var(--vibrate-x) var(--vibrate-y);
@@ -139,7 +137,7 @@ body {
 	}
 
 	#Flamme {
-		animation: var(--animation-vibrate), ignite var(--duration-ignite) linear var(--delay-ignite) both;
+		animation: var(--animation-vibrate), ignite var(--duration-ignite) linear var(--delay-ignite) both, glow var(--duration-glow) ease-in-out calc(var(--delay-ignite) + var(--duration-ignite)) infinite alternate both;
 	}
 }
 
@@ -150,10 +148,9 @@ body {
 
 	> * {
 		--delay-light: calc(var(--delay-ignite) + var(--duration-ignite) * .75 + var(--light-order) * var(--delay-light-step));
+
 		opacity: 0;
-		animation:
-			light-up var(--duration-light) ease-out var(--delay-light) forwards,
-			spread var(--duration-spread) var(--timing-spring) var(--delay-light) both;
+		animation: light-up var(--duration-light) ease-out var(--delay-light) forwards, spread var(--duration-spread) var(--timing-spring) var(--delay-light) both;
 	}
 
 	#R-2, #C { --light-order: 1; }
@@ -172,6 +169,11 @@ body {
 	55% { opacity: .9; }
 	60% { opacity: .5; }
 	100% { opacity: 1; }
+}
+
+@keyframes glow {
+	from { color: var(--fg-body); }
+	to { color: var(--primary-base); }
 }
 
 @keyframes light-up {
@@ -202,7 +204,6 @@ body {
 	initial-value: 0px;
 }
 
-/* x and y sway on different periods for an organic, non-repeating path */
 @keyframes vibrate-x {
 	from { --vibrate-x: -2px; }
 	to { --vibrate-x: 2px; }
