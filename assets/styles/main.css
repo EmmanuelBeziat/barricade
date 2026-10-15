@@ -36,12 +36,16 @@
 	/* transitions */
 	--duration-fast: .25s;
 	--duration-normal: 2s;
-	--duration-vibrate: 5s;
-	--duration-ignite: .8s;
-	--duration-light: .6s;
-	--delay-ignite: 1.2s;
-	--delay-light-step: .12s;
+	--duration-vibrate: 7s;
+	--duration-ignite: .6s;
+	--duration-light: .5s;
+	--duration-spread: .8s;
+	--delay-ignite: .9s;
+	--delay-light-step: .1s;
+	--spread-step: 6px;
 	--timing-appear: cubic-bezier(0, 0.206, 0.34, 1);
+	/* damped spring: 1 - e^(-5t) * cos(3πt) */
+	--timing-spring: linear(0, 0.25, 0.534, 0.795, 1, 1.135, 1.203, 1.215, 1.189, 1.142, 1.088, 1.039, 1, 0.974, 0.962, 0.959, 0.964, 0.973, 0.983, 0.993, 1, 1.005, 1.007, 1.008, 1);
 
 	@media (prefers-reduced-motion: reduce) {
 		--duration-fast: 0s;
@@ -49,6 +53,7 @@
 		--duration-vibrate: 0s;
 		--duration-ignite: 0s;
 		--duration-light: 0s;
+		--duration-spread: 0s;
 		--delay-ignite: 0s;
 		--delay-light-step: 0s;
 	}
@@ -122,8 +127,14 @@ body {
 }
 
 #Torche {
+	/* bottom of the torch slowest, flame fastest */
+	--duration-vibrate-path: calc(var(--duration-vibrate) * (1 + (sibling-count() - sibling-index()) * .25));
+	--animation-vibrate:
+		vibrate-x calc(var(--duration-vibrate-path) * .2) ease-in-out infinite alternate .35s both,
+		vibrate-y calc(var(--duration-vibrate-path) * .13) ease-in-out infinite alternate .35s both;
+
 	path {
-		--animation-vibrate: vibrate calc(var(--duration-vibrate) / sibling-index() * sibling-count()) ease-in-out infinite .35s both;
+		translate: var(--vibrate-x) var(--vibrate-y);
 		animation: var(--animation-vibrate);
 	}
 
@@ -134,16 +145,22 @@ body {
 
 /* letters light up from the torch outwards */
 #Texte {
+	--light-order: 4;
+	--spread-side: 1;
+
 	> * {
-		--light-order: 4;
+		--delay-light: calc(var(--delay-ignite) + var(--duration-ignite) * .75 + var(--light-order) * var(--delay-light-step));
 		opacity: 0;
-		animation: light-up var(--duration-light) ease-out calc(var(--delay-ignite) + var(--duration-ignite) * .75 + var(--light-order) * var(--delay-light-step)) forwards;
+		animation:
+			light-up var(--duration-light) ease-out var(--delay-light) forwards,
+			spread var(--duration-spread) var(--timing-spring) var(--delay-light) both;
 	}
 
 	#R-2, #C { --light-order: 1; }
 	#R, #A-2 { --light-order: 2; }
 	/* #R-3 is the D */
 	#A, #R-3 { --light-order: 3; }
+	#C, #A-2, #R-3, #E { --spread-side: -1; }
 }
 
 @keyframes ignite {
@@ -167,20 +184,31 @@ body {
 	}
 }
 
-@keyframes vibrate {
-	0%, 100% {
-		transform: translate(0);
+@keyframes spread {
+	from {
+		translate: calc(var(--light-order) * var(--spread-side) * var(--spread-step)) 0;
 	}
-	20% {
-		transform: translate(1px, -2px);
-	}
-	40% {
-		transform: translate(2px, 2px);
-	}
-	60% {
-		transform: translate(-2px, 1px);
-	}
-	80% {
-		transform: translate(-1px, -2px);
-	}
+}
+
+@property --vibrate-x {
+	syntax: "<length>";
+	inherits: false;
+	initial-value: 0px;
+}
+
+@property --vibrate-y {
+	syntax: "<length>";
+	inherits: false;
+	initial-value: 0px;
+}
+
+/* x and y sway on different periods for an organic, non-repeating path */
+@keyframes vibrate-x {
+	from { --vibrate-x: -2px; }
+	to { --vibrate-x: 2px; }
+}
+
+@keyframes vibrate-y {
+	from { --vibrate-y: 1px; }
+	to { --vibrate-y: -2px; }
 }
